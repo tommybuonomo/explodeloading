@@ -1,7 +1,5 @@
 #Explode Loading Animation
 
-A cool bounce circle loading animation inspired by [this post](http://www.materialup.com/posts/loading-interface) on [MaterialUp](http://www.materialup.com/)
-
 ![ezgif com-video-to-gif](https://cloud.githubusercontent.com/assets/15737675/18030471/35565996-6cb7-11e6-9327-42ff7115651c.gif) ![ezgif com-video-to-gif 2](https://cloud.githubusercontent.com/assets/15737675/18030479/75e68184-6cb7-11e6-89a9-71271000d544.gif)
 ![explode3](https://cloud.githubusercontent.com/assets/15737675/18030477/506f28c0-6cb7-11e6-85b9-b675d6ebd164.gif)
 
