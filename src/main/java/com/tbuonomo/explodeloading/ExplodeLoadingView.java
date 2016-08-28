@@ -8,7 +8,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.PointF;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
@@ -35,7 +34,6 @@ public class ExplodeLoadingView extends RelativeLayout {
     private List<ImageView> mCircles;
     private AnimatorSet mCircleAnimator;
     private int mDuration;
-    private PointF mCenterPoint;
     private int size;
 
     public ExplodeLoadingView(Context context) {
@@ -60,7 +58,7 @@ public class ExplodeLoadingView extends RelativeLayout {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ExplodeLoadingView);
 
             int numberPoints = a.getInt(R.styleable.ExplodeLoadingView_pointsNumber, -1);
-            setUpPoints(context, numberPoints == -1 ? DEFULT_NB_CIRCLES : numberPoints);
+            setUpPoints(context, numberPoints <= 0 ? DEFULT_NB_CIRCLES : numberPoints);
 
             int pointColor = a.getColor(R.styleable.ExplodeLoadingView_pointsColor, -1);
             setUpCircleColors(pointColor == -1 ?
@@ -100,26 +98,15 @@ public class ExplodeLoadingView extends RelativeLayout {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        setUpCirclePositions(w, h);
-        setUpBackgroundSize(w, h);
+        size = Math.min(w, h);
         setUpAnimators(mDuration);
         mCircleAnimator.start();
     }
 
-    private void setUpCirclePositions(int w, int h) {
-        int margin = w / 5;
-        pointRadius = mCircles.get(0).getMeasuredWidth() / 2;
-
-        for (ImageView circle: mCircles) {
-            mCenterPoint = new PointF();
-            LayoutParams paramCenter = (LayoutParams) circle.getLayoutParams();
-            mCenterPoint.x = paramCenter.leftMargin = w / 2 - pointRadius;
-            mCenterPoint.y = paramCenter.topMargin = h / 2 - pointRadius;
-        }
-    }
-
     private void setUpAnimators(int duration) {
         final int nbPoints = mCircles.size();
+        int pointRadius = mCircles.get(0).getMeasuredWidth();
+
         final ValueAnimator valueAnimator1 = ValueAnimator.ofFloat(0, size / 2 - pointRadius);
         valueAnimator1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -178,10 +165,6 @@ public class ExplodeLoadingView extends RelativeLayout {
         for (Animator animator : mCircleAnimator.getChildAnimations()) {
             animator.setDuration(duration);
         }
-    }
-
-    private void setUpBackgroundSize(int w, int h) {
-        size = Math.min(w, h);
     }
 
     private void setUpCircleSize(int size) {

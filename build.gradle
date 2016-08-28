@@ -34,7 +34,7 @@ buildscript {
     }
 }
 
-group = 'com.tbuonomo.andrui'
+group = 'com.tbuonomo.explodeloading'
 version = '1.0.0'
 
 apply plugin: 'com.jfrog.bintray'
@@ -60,9 +60,9 @@ bintray {
         name = 'explode-loading'
 
         version {
-            name = '1.0.0'
+            name = version
             desc = 'Initial'
-            vcsTag = '1.0.0'
+            vcsTag = version
         }
 
         licenses = ['Apache-2.0']
